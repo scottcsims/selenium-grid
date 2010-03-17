@@ -1,8 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + "/spec_helper")
 
 describe "Perigord" do
-  include GoogleImageExample
-  
+
   it "Has magnific cro-magnon paintings" do
     run_scenario :search_string => "lascaux hall of the bull"
   end

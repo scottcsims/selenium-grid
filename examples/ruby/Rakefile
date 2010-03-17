@@ -8,23 +8,14 @@
 #
 
 require "rubygems"
-gem "rspec", "=1.1.8"
+gem "rspec", "=1.1.12"
 require 'rake'
 require 'spec/rake/spectask'
+require File.expand_path(File.dirname(__FILE__) + '/lib/deep_test/rake_tasks')
 
-gem "selenium-client", "=1.2.7"
-require "selenium/rake/tasks"
-
-# Make sure we pick up the reporter from the appropriate selenium-client
-# install as RSpec runner --require does not discriminate between multiple
-# selenium-client gems.
-gem_executable = Config::CONFIG["host_os"] =~ /mswin/ ? "gem.bat" : "gem"
-report_formatter_path = `#{gem_executable} which -q "selenium/rspec/reporting/selenium_test_report_formatter"`.chomp
-report_formatter_path.gsub! /selenium-client-\d+\.\d+.\d+/, "selenium-client-1.2.7"
+report_formatter_path = "lib/reporting/selenium_test_report_formatter"
 
 
-gem "deep_test", "=1.2.2"
-require "deep_test/rake_tasks"
 
 task :default => :'tests:run_in_parallel'
 
@@ -35,8 +26,7 @@ task :default => :'tests:run_in_parallel'
 desc("Run all tests in parallel using DeepTest.")
 Spec::Rake::SpecTask.new("tests:run_in_parallel") do |t|
   t.spec_files = FileList['./**/*_spec.rb']
-  t.deep_test :number_of_workers => 6,
-              :timeout_in_seconds => 300
+  t.deep_test :number_of_agents => 6
   t.spec_opts << '--color'
   t.spec_opts << "--require 'rubygems,#{report_formatter_path}'"
   t.spec_opts << "--format=Selenium::RSpec::SeleniumTestReportFormatter:./tmp/test_report.html"
@@ -60,20 +50,6 @@ Spec::Rake::SpecTask.new('tests:run_in_sequence') do |t|
   t.fail_on_error = true
 end
 task :'tests:run_in_sequence' => :create_report_dir
-
-
-#
-# Legacy way to drive tests in parallel before DeepTest RSpec support.
-# Kept to document a simple way to run the tests in parallel for non-Ruby
-# platforms.
-#
-
-desc("[DEPRECATED] Run all behaviors in parallel spawing multiple processes. DeepTest offers a better alternative.")
-task :'tests:run_in_parallel:multiprocess' => :create_report_dir do
-  require File.expand_path(File.dirname(__FILE__) + '/lib/multi_process_behaviour_runner')
-  runner = MultiProcessSpecRunner.new(10)
-  runner.run(Dir['*_spec.rb'])
-end 
 
 task :create_report_dir do
   rm_f File.expand_path(File.dirname(__FILE__) + "/tmp/rspec_report")

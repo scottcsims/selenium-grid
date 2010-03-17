@@ -1,8 +1,6 @@
-require File.expand_path(File.dirname(__FILE__) + "/spec_helper")
+require File.dirname(__FILE__) + "/spec_helper"
 
 describe "Paris" do
-  include GoogleImageExample
-  
   it "Has museums" do
     run_scenario :search_string => "Louvre"
   end
