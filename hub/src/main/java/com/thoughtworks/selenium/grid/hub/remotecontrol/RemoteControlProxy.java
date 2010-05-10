@@ -23,6 +23,7 @@ public class RemoteControlProxy {
     private final String environment;
     private final String host;
     private final int port;
+	private String sessionId;
 
 
     public RemoteControlProxy(String host, int port, String environment, HttpClient httpClient) {
@@ -113,7 +114,7 @@ public class RemoteControlProxy {
             Map<String, String[]> params = new HashMap<String, String[]>();
             params.put("cmd", new String[] { "testComplete" });
             params.put("sessionId", new String[] { sessionId });
-
+            this.sessionId = null;
             forward(new HttpParameters(params));
         }
         catch (IOException e) {
@@ -142,4 +143,11 @@ public class RemoteControlProxy {
         return false;
     }
 
+	public String sessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId){
+		this.sessionId = sessionId;
+	}
 }

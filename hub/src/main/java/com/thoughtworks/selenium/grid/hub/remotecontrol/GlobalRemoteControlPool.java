@@ -87,6 +87,7 @@ public class GlobalRemoteControlPool implements DynamicRemoteControlPool {
                 final RemoteControlSession newSession;
   
                 newSession = new RemoteControlSession(sessionId, remoteControl);
+                remoteControl.setSessionId(sessionId);
                 remoteControlsBySessionIds.put(sessionId, newSession);
             }
         }

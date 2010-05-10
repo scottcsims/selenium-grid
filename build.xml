@@ -22,7 +22,7 @@
     <condition property="java-5">
       <not><matches pattern="^1\.[0-4]" string="${ant.java.version}"/></not>
     </condition>
-    <fail message="Your must use Java 1.5 or newer. You are currrenltly using '${ant.java.version}'." unless="java-5"/>
+    <fail message="Your must use Java 1.5 or newer. You are currrently using '${ant.java.version}'." unless="java-5"/>
 
     <echo/>
     <echo>******************************************************</echo>
