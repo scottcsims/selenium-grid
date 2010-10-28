@@ -185,6 +185,18 @@ public class GlobalRemoteControlPoolTest extends UsingClassMock {
     }
 
     @Test
+    public void associateWithSessionSetsSessionIdOnRemoteControl() {
+        final GlobalRemoteControlPool pool = new GlobalRemoteControlPool();
+        final RemoteControlProxy firstRemoteControl = new RemoteControlProxy("", 0, "", null);
+        final RemoteControlProxy secondRemoteControl = new RemoteControlProxy("", 0, "", null);
+
+        pool.associateWithSession(firstRemoteControl, "first session id");
+        pool.associateWithSession(secondRemoteControl, "second session id");
+
+        assertEquals(firstRemoteControl.sessionId(), "first session id");
+        assertEquals(secondRemoteControl.sessionId(), "second session id");
+    }
+    @Test
     public void afterReleaseForSessionARemoteControlIsNotAssociatedWithASessionAnymore() {
         final RemoteControlProxy remoteControl;
         final GlobalRemoteControlPool pool;                                                

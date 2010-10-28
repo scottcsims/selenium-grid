@@ -81,12 +81,18 @@ public class GlobalRemoteControlPool implements DynamicRemoteControlPool {
                 throw new IllegalStateException(
                         "Session '" + sessionId + "' is already asssociated with " + remoteControlsBySessionIds.get(sessionId));
             }
+<<<<<<< HEAD
 
-            final RemoteControlSession newSession;
-
-            newSession = new RemoteControlSession(sessionId, remoteControl);
-            remoteControl.setSessionId(sessionId);
-            remoteControlsBySessionIds.putIfAbsent(sessionId, newSession);
+            remoteControlsBySessionIds.put(sessionId, new RemoteControlSession(sessionId, remoteControl));
+=======
+            synchronized (remoteControlsBySessionIds) {
+                final RemoteControlSession newSession;
+  
+                newSession = new RemoteControlSession(sessionId, remoteControl);
+                remoteControl.setSessionId(sessionId);
+                remoteControlsBySessionIds.put(sessionId, newSession);
+            }
+>>>>>>> betarelease/master
         }
         if (LOGGER.isDebugEnabled()) {
             logSessionMap();
