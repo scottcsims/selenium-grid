@@ -8,8 +8,9 @@
   <property name="build.output" location="target/classes"/>
   <property name="dist" location="${basedir}/target/dist"/>
   <property name="test.src" location="src/test/unit/java"/>
+  <property name="test.classpath" location=""/>
   <property name="test.functional.output" location="target/test-functional-classes"/>
-  <property name="test.functional.src" location="src/test/functional"/>
+  <property name="test.functional.src" location="src/test/functional/java"/>
   <property name="test.output" location="target/test-classes"/>
   <property name="test.reports" location="target/test-reports"/>
   <property name="metrics.reports" location="target/metrics"/>
@@ -94,7 +95,8 @@
            destdir="${build.output}"
            debug="true"
            source="1.5"
-           target="1.5">
+           target="1.5"
+           includeantruntime="false">
       <classpath refid="compile.classpath"/>
     </javac>
     <copy todir="${build.output}" verbose="true">
@@ -114,7 +116,8 @@
            source="1.5"
            target="1.5"
            debug="true"
-           deprecation="true">
+           deprecation="true"
+           includeantruntime="false">
       <classpath refid="unit-testing.classpath"/>
     </javac>
   </target>
@@ -152,7 +155,8 @@
            source="1.5"
            target="1.5"
            debug="true"
-           deprecation="true">
+           deprecation="true"
+           includeantruntime="false">
       <classpath refid="functional-testing.classpath"/>
     </javac>
   </target>
@@ -277,8 +281,8 @@
           <file name="infrastructure/core/build.xml"/>
           <file name="infrastructure/webserver/build.xml"/>
           <file name="hub/build.xml"/>
-          <file name="agent/build.xml"/>
           <file name="remote-control/build.xml"/>
+          <file name="agent/build.xml"/>
           <file name="tools/build.xml"/>
           <file name="demo/build.xml"/>
           <file name="examples/java-testng/build.xml"/>
