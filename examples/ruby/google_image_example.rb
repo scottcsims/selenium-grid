@@ -14,12 +14,11 @@ require File.dirname(__FILE__) + "/create_browser_driver"
     browser.wait_for_page_to_load "30000"
     puts "Click the link to refine the search to large images"
     browser.click "css=a:contains(\"Large\")"
-    browser.wait_for_element("css=li:contains(\"Large\")")
+    browser.wait_for_page_to_load "30000"
     puts "Verify that the size of large is now selected"
     browser.element?("css=li:contains(\"Large\")").should == true
-    puts "Verifying that #{options[:search_string].split(/ /).first} is on the page"
-    browser.text?(options[:search_string].split(/ /).first).should be_true
-    browser.close_current_browser_session
+    puts "Verifying that #{options[:search_string]} is on the page"
+    browser.element?("css=input[value=#{options[:search_string]}]").should be_true
   end
   
 

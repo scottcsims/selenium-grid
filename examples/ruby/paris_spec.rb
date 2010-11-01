@@ -1,6 +1,11 @@
 require File.dirname(__FILE__) + "/spec_helper"
 
 describe "Paris" do
+  append_after(:each) do
+    if !browser.nil?
+      browser.close_current_browser_session
+    end
+  end
   it "Has museums" do
     run_scenario :search_string => "Louvre"
   end
